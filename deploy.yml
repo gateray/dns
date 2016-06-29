@@ -1,0 +1,10 @@
+---
+- hosts: masters
+  gather_facts: False
+  roles:
+    - dns-master
+
+- hosts: slaves
+  gather_facts: False
+  roles:
+    - dns-slave

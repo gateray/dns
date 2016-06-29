@@ -1,0 +1,15 @@
+$TTL 1D
+@		IN  SOA   @    admin (
+                    2016062801
+                    2H
+                    10M
+                    1W
+                    6H )
+                IN  NS    ns1
+                IN  NS    ns2
+ns1             IN  A     192.168.124.71
+ns2             IN  A     192.168.124.72
+www             IN  A     192.168.124.71
+m               IN  CNAME www
+*               IN  A     192.168.124.72
+

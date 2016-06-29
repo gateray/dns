@@ -1,0 +1,25 @@
+---
+- name: Install bind9
+  yum: name={{ item }} state=latest
+  with_items:
+    - bind
+    - bind-libs
+    - bind-utils
+    - libselinux-python
+
+- name: Config to bind9
+  template: src={{ item }} dest=/etc/{{ item }} mode=0640 owner=root group=named
+  with_items:
+    - named.conf
+    - named.rfc1912.zones
+  notify: 
+    - Reload named daemon
+
+- name: Add zone databases
+  copy: src={{ item }}.zone dest=/var/named/slaves/{{ item }}.zone mode=0640 owner=root group=named 
+  with_items: "{{ zones_list }}"
+  notify:
+    - Reload named daemon
+
+- name: Reload named daemon
+  service: name=named state=reloaded
